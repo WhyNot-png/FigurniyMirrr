@@ -1,0 +1,19 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+<h2>Регистрация пользователя</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <div>
+        {{ regform.as_p }}
+        <button type="submit" style="background: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 5px; margin-top: 15px;">
+            Зарегистрировать
+        </button>
+    </div>
+</form>
+
+<div style="margin-top: 20px;">
+    <p>Уже есть аккаунт? <a href="/login">Войти</a></p>
+</div>
+{% endblock %}

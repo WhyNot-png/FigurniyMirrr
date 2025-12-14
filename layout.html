@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}🎮 ФигурныйМир - Магазин фигурок{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'app/content/site.css' %}">
+</head>
+<body>
+    <div class="page-wrapper">
+        <!-- ШАПКА -->
+        <header class="header">
+            <div class="container">
+                <div class="header-content">
+                    <a href="/" class="logo">
+                        🎮 ФигурныйМир
+                    </a>
+
+                    <nav class="nav">
+                        <a href="/" class="nav-link">Главная</a>
+                        <a href="/catalog" class="nav-link">Каталог</a>
+                        <a href="/blog/1/" class="nav-link"> Блог</a>
+                        <a href="/video/" class="nav-link"> Видео</a>  <!-- ДОБАВЛЕНО -->
+                        <a href="/about" class="nav-link">О магазине</a>
+                        <a href="/contact" class="nav-link">Контакты</a>
+                        <a href="/feedback" class="nav-link">Обратная связь</a>
+
+                        <!-- ДОБАВЛЯЕМ ССЫЛКУ ДЛЯ АДМИНИСТРАТОРА -->
+                        {% if user.is_superuser %}
+                        <a href="/newpost/" class="nav-link admin-link">➕ Добавить статью</a>
+                        {% endif %}
+                    </nav>
+
+                    <div class="auth-section">
+                        {% if user.is_authenticated %}
+                        <span class="user-greeting">Привет, {{ user.username }}!</span>
+                        <a href="{% url 'logout' %}" class="auth-btn logout">Выйти</a>
+                        {% else %}
+                        <a href="{% url 'login' %}" class="auth-btn">Войти</a>
+                        <a href="{% url 'registration' %}" class="auth-btn register">Регистрация</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- ОСНОВНОЙ КОНТЕНТ -->
+        <main class="main">
+            <div class="container">
+                <div class="content-wrapper">
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </main>
+
+        <!-- ПОДВАЛ -->
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; {{ year }} - ФигурныйМир - Магазин коллекционных фигурок</p>
+                <div class="footer-status">
+                    {% if user.is_authenticated %}
+                    🔐 Авторизован: {{ user.username }}
+                    {% else %}
+                    👤 Гость
+                    {% endif %}
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

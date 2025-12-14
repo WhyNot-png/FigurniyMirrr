@@ -1,0 +1,189 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+<div class="video-container">
+    <h1>🎬 Видео-галерея</h1>
+    <p class="text-center" style="color: #7f8c8d; margin-bottom: 2rem;">
+        Смотрите наши видео-обзоры коллекционных фигурок
+    </p>
+
+    <div class="video-grid">
+        <!-- Первое видео -->
+        <div class="video-card">
+            <div class="video-header">
+                <h3>🎁 Обзор фигурки Человека-паука</h3>
+            </div>
+            <div class="video-wrapper">
+                <video controls width="100%" poster="{{ MEDIA_URL }}posters/video1-poster.jpg">
+                    <source src="{{ MEDIA_URL }}videos/spider-man-review.mp4" type="video/mp4">
+                    Ваш браузер не поддерживает видео тег.
+                </video>
+            </div>
+            <div class="video-info">
+                <p>Подробный обзор коллекционной фигурки Человека-паука от Marvel. Детализация, качество материалов и особенности конструкции.</p>
+                <div class="video-meta">
+                    <span>⏱️ Длительность: 40 сек</span>
+                    <span>📁 Формат: MP4</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Второе видео -->
+        <div class="video-card">
+            <div class="video-header">
+                <h3>🌟 Распаковка фигурки Эльзы</h3>
+            </div>
+            <div class="video-wrapper">
+                <video controls width="100%" poster="{{ MEDIA_URL }}posters/video2-poster.jpg">
+                    <source src="{{ MEDIA_URL }}videos/elsa-unboxing.mp4" type="video/mp4">
+                    Ваш браузер не поддерживает видео тег.
+                </video>
+            </div>
+            <div class="video-info">
+                <p>Распаковка эксклюзивной фигурки Эльзы из "Холодного сердца". Показываем упаковку, аксессуары и особенности фигурки.</p>
+                <div class="video-meta">
+                    <span>⏱️ Длительность: 29 сек</span>
+                    <span>📁 Формат: MP4</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Можно добавить больше видео по аналогии -->
+
+    <div class="video-features">
+        <div class="alert alert-success">
+            <h4>🎯 Особенности наших видео</h4>
+            <ul>
+                <li>✅ Высокое качество изображения</li>
+                <li>✅ Короткая продолжительность (до 1 минуты)</li>
+                <li>✅ Подробные обзоры и распаковки</li>
+                <li>✅ Оптимизированы для быстрой загрузки</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<style>
+    .video-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .video-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .video-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        overflow: hidden;
+        transition: all 0.3s ease;
+        border: 1px solid #e9ecef;
+    }
+
+        .video-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+        }
+
+    .video-header {
+        background: linear-gradient(135deg, #2c3e50, #3498db);
+        color: white;
+        padding: 1.2rem 1.5rem;
+    }
+
+        .video-header h3 {
+            margin: 0;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+    .video-wrapper {
+        padding: 0;
+        background: #000;
+    }
+
+        .video-wrapper video {
+            display: block;
+            width: 100%;
+            height: auto;
+            border: none;
+        }
+
+    .video-info {
+        padding: 1.5rem;
+    }
+
+        .video-info p {
+            color: #2c3e50;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+    .video-meta {
+        display: flex;
+        gap: 1.5rem;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid #ecf0f1;
+        color: #7f8c8d;
+        font-size: 0.9rem;
+        flex-wrap: wrap;
+    }
+
+    .video-features {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        margin-top: 2rem;
+    }
+
+        .video-features ul {
+            margin-bottom: 0;
+        }
+
+        .video-features li {
+            margin-bottom: 0.5rem;
+        }
+
+    @media (max-width: 768px) {
+        .video-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .video-container {
+            padding: 15px;
+        }
+
+        .video-meta {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .video-header h3 {
+            font-size: 1.1rem;
+        }
+    }
+
+    /* Стили для элементов управления видео */
+    video::-webkit-media-controls {
+        background: rgba(0,0,0,0.5);
+    }
+
+    video::-webkit-media-controls-play-button {
+        background-color: #3498db;
+        border-radius: 50%;
+    }
+
+    video::-webkit-media-controls-volume-slider {
+        background-color: #3498db;
+    }
+</style>
+{% endblock %}

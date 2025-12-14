@@ -1,0 +1,205 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+<h1>💬 Обратная связь</h1>
+<p class="text-center" style="color: #7f8c8d; margin-bottom: 2rem;">
+    Поделитесь вашим мнением о нашем сайте. Ваш отзыв поможет нам стать лучше!
+</p>
+
+{% if success %}
+<div class="alert alert-success">
+    <h3>✅ Спасибо за ваш отзыв!</h3>
+    <p>Мы ценим ваше мнение и обязательно учтем все ваши пожелания для улучшения нашего сайта.</p>
+</div>
+
+<div class="content-card">
+    <h3>📋 Ваши ответы:</h3>
+    <div class="submitted-data">
+        <div class="data-grid">
+            <div class="data-item">
+                <strong>👤 Имя:</strong> {{ submitted_data.name }}
+            </div>
+            <div class="data-item">
+                <strong>📧 Email:</strong> {{ submitted_data.email }}
+            </div>
+            <div class="data-item">
+                <strong>⭐ Общая оценка:</strong> {{ submitted_data.general_rating }}
+            </div>
+            <div class="data-item">
+                <strong>🔍 Узнали о сайте:</strong> {{ submitted_data.discovery }}
+            </div>
+            <div class="data-item">
+                <strong>🧭 Удобство навигации:</strong> {{ submitted_data.navigation_rating }}
+            </div>
+            <div class="data-item">
+                <strong>👍 Рекомендация:</strong> {{ submitted_data.recommend }}
+            </div>
+            <div class="data-item">
+                <strong>🕐 Частота посещений:</strong> {{ submitted_data.visit_frequency }}
+            </div>
+            <div class="data-item full-width">
+                <strong>❤️ Понравившиеся features:</strong> {{ submitted_data.liked_features }}
+            </div>
+            <div class="data-item full-width">
+                <strong>💡 Пожелания:</strong>
+                <div class="suggestions-text">{{ submitted_data.suggestions }}</div>
+            </div>
+            <div class="data-item">
+                <strong>📧 Рассылка:</strong> {{ submitted_data.newsletter }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center" style="margin-top: 2rem;">
+    <a href="/feedback" class="btn btn-primary">📝 Заполнить еще один отзыв</a>
+</div>
+
+{% else %}
+<form method="post" class="feedback-form">
+    {% csrf_token %}
+
+    <!-- Секция 1: Основная информация -->
+    <div class="form-section">
+        <h4>📝 Основная информация</h4>
+        <div class="form-group">
+            <label class="form-label required-field">{{ form.name.label }}</label>
+            {{ form.name }}
+            {% if form.name.errors %}
+            <div class="error-message">{{ form.name.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label class="form-label required-field">{{ form.email.label }}</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+            <div class="error-message">{{ form.email.errors }}</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Секция 2: Оценки -->
+    <div class="form-section">
+        <h4>⭐ Оценка сайта</h4>
+
+        <div class="form-group">
+            <label class="form-label required-field">{{ form.general_rating.label }}</label>
+            <div class="rating-options">
+                {% for choice in form.general_rating %}
+                <div class="rating-option">
+                    {{ choice.tag }}
+                    <label for="{{ choice.id_for_label }}">{{ choice.choice_label }}</label>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label required-field">{{ form.navigation_rating.label }}</label>
+            <div class="rating-options">
+                {% for choice in form.navigation_rating %}
+                <div class="rating-option">
+                    {{ choice.tag }}
+                    <label for="{{ choice.id_for_label }}">{{ choice.choice_label }}</label>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Секция 3: Детали -->
+    <div class="form-section">
+        <h4>🔍 Детали посещения</h4>
+
+        <div class="form-group">
+            <label class="form-label required-field">{{ form.discovery.label }}</label>
+            {{ form.discovery }}
+        </div>
+
+        <div class="form-group">
+            <label class="form-label required-field">{{ form.visit_frequency.label }}</label>
+            <div class="rating-options">
+                {% for choice in form.visit_frequency %}
+                <div class="rating-option">
+                    {{ choice.tag }}
+                    <label for="{{ choice.id_for_label }}">{{ choice.choice_label }}</label>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Секция 4: Что понравилось -->
+    <div class="form-section">
+        <h4>❤️ Что понравилось</h4>
+        <div class="form-group">
+            <label class="form-label">{{ form.liked_features.label }}</label>
+            <div class="feature-options">
+                {% for choice in form.liked_features %}
+                <div class="feature-option">
+                    {{ choice.tag }}
+                    <label for="{{ choice.id_for_label }}">{{ choice.choice_label }}</label>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="help-text">{{ form.liked_features.help_text }}</div>
+        </div>
+    </div>
+
+    <!-- Секция 5: Рекомендация -->
+    <div class="form-section">
+        <h4>📢 Рекомендация</h4>
+        <div class="form-group">
+            <label class="form-label required-field">{{ form.recommend.label }}</label>
+            <div class="rating-options">
+                {% for choice in form.recommend %}
+                <div class="rating-option">
+                    {{ choice.tag }}
+                    <label for="{{ choice.id_for_label }}">{{ choice.choice_label }}</label>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Секция 6: Пожелания -->
+    <div class="form-section">
+        <h4>💡 Ваши пожелания</h4>
+        <div class="form-group">
+            <label class="form-label">{{ form.suggestions.label }}</label>
+            {{ form.suggestions }}
+            <div class="help-text">{{ form.suggestions.help_text }}</div>
+            {% if form.suggestions.errors %}
+            <div class="error-message">{{ form.suggestions.errors }}</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Секция 7: Согласия -->
+    <div class="form-section privacy-section">
+        <div class="form-group">
+            <div class="feature-option">
+                {{ form.privacy_agreement }}
+                <label for="{{ form.privacy_agreement.id_for_label }}">{{ form.privacy_agreement.label }}</label>
+            </div>
+            {% if form.privacy_agreement.errors %}
+            <div class="error-message">{{ form.privacy_agreement.errors }}</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="form-section newsletter-section">
+        <div class="form-group">
+            <div class="feature-option">
+                {{ form.newsletter_subscription }}
+                <label for="{{ form.newsletter_subscription.id_for_label }}">{{ form.newsletter_subscription.label }}</label>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="submit-btn">📤 Отправить отзыв</button>
+</form>
+{% endif %}
+
+{% endblock %}

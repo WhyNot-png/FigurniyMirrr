@@ -1,0 +1,35 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+<h2>Авторизация</h2>
+
+<form method="POST" action="{% url 'login' %}">
+    {% csrf_token %}
+
+    {% if form.errors %}
+    <div style="background: #f8d7da; color: #721c24; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
+        Неправильное имя пользователя или пароль. Попробуйте снова.
+    </div>
+    {% endif %}
+
+    <div style="margin-bottom: 15px;">
+        <label for="id_username">Имя пользователя:</label>
+        <input type="text" name="username" id="id_username" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <label for="id_password">Пароль:</label>
+        <input type="password" name="password" id="id_password" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+    </div>
+
+    <button type="submit" style="background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px;">
+        Войти
+    </button>
+
+    <input type="hidden" name="next" value="{{ next }}">
+</form>
+
+<div style="margin-top: 20px;">
+    <p>Нет аккаунта? <a href="{% url 'registration' %}">Зарегистрироваться</a></p>
+</div>
+{% endblock %}

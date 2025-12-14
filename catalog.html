@@ -1,0 +1,264 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+<div class="catalog-container">
+    <h1>🎁 Каталог фигурок</h1>
+    <p class="text-center" style="color: #7f8c8d; margin-bottom: 2rem;">
+        Коллекционные фигурки ваших любимых персонажей
+    </p>
+
+    <!-- Фильтр по категориям -->
+    <div class="categories-filter">
+        <h3>📂 Категории</h3>
+        <div class="categories-grid">
+            {% for category in categories %}
+            <a href="?category={{ category.id }}"
+               class="category-filter {% if current_category == category.id %}active{% endif %}">
+                <span class="category-icon">{{ category.icon }}</span>
+                <span class="category-name">{{ category.name }}</span>
+                <span class="category-count">({{ category.count }})</span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Информация о выбранной категории -->
+    <div class="category-info">
+        <h2>
+            {% if current_category == 'all' %}
+            🎁 Все фигурки
+            {% elif current_category == 'disney' %}
+            🎬 Дисней
+            {% elif current_category == 'marvel' %}
+            🦸 Марвел
+            {% elif current_category == 'anime' %}
+            🌀 Аниме
+            {% else %}
+            📦 {{ current_category|title }}
+            {% endif %}
+            <span class="products-count">({{ products_count }} товаров)</span>
+        </h2>
+    </div>
+
+    <!-- Сетка товаров -->
+    <div class="product-grid">
+        {% for product in products %}
+        <div class="product-card">
+            <span class="product-icon">{{ product.icon }}</span>
+            <h3 class="product-title">{{ product.title }}</h3>
+            <p class="product-description">{{ product.description }}</p>
+            <div class="product-price">{{ product.price }}</div>
+            <div class="product-category">
+                <span class="category-badge">{{ product.category|title }}</span>
+            </div>
+            <!-- КНОПКА "В КОРЗИНУ" УДАЛЕНА -->
+        </div>
+        {% empty %}
+        <div class="no-products">
+            <div class="empty-state">
+                <span class="empty-icon">📦</span>
+                <h4>Товаров не найдено</h4>
+                <p>В этой категории пока нет товаров. Попробуйте выбрать другую категорию.</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .catalog-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    /* Стили для фильтра категорий */
+    .categories-filter {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
+    }
+
+        .categories-filter h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+    .categories-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+
+    .category-filter {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        background: #f8f9fa;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #2c3e50;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+        .category-filter:hover {
+            background: #e9ecef;
+            border-color: #3498db;
+            transform: translateY(-2px);
+        }
+
+        .category-filter.active {
+            background: #3498db;
+            border-color: #3498db;
+            color: white;
+        }
+
+    .category-icon {
+        font-size: 1.5rem;
+        margin-right: 0.8rem;
+    }
+
+    .category-name {
+        font-weight: 600;
+        flex-grow: 1;
+    }
+
+    .category-count {
+        background: rgba(255,255,255,0.2);
+        padding: 0.2rem 0.6rem;
+        border-radius: 12px;
+        font-size: 0.8rem;
+    }
+
+    .category-filter.active .category-count {
+        background: rgba(255,255,255,0.3);
+    }
+
+    /* Информация о категории */
+    .category-info {
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+        .category-info h2 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+    .products-count {
+        color: #7f8c8d;
+        font-size: 1rem;
+        font-weight: normal;
+    }
+
+    /* Сетка товаров */
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+    }
+
+    .product-card {
+        background: white;
+        border: 1px solid #e9ecef;
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border-color: #3498db;
+        }
+
+    .product-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        display: block;
+    }
+
+    .product-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        color: #2c3e50;
+    }
+
+    .product-description {
+        color: #7f8c8d;
+        margin-bottom: 1rem;
+        line-height: 1.4;
+    }
+
+    .product-price {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: #e74c3c;
+        margin: 1rem 0;
+    }
+
+    .product-category {
+        margin-bottom: 1rem;
+    }
+
+    .category-badge {
+        background: #ecf0f1;
+        color: #2c3e50;
+        padding: 0.3rem 0.8rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    /* Состояние пустого списка */
+    .no-products {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 3rem 2rem;
+    }
+
+    .empty-state {
+        color: #7f8c8d;
+    }
+
+    .empty-icon {
+        font-size: 4rem;
+        display: block;
+        margin-bottom: 1rem;
+    }
+
+    /* Адаптивность */
+    @media (max-width: 768px) {
+        .catalog-container {
+            padding: 15px;
+        }
+
+        .categories-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .product-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .category-filter {
+            flex-direction: column;
+            text-align: center;
+            gap: 0.5rem;
+        }
+
+        .category-icon {
+            margin-right: 0;
+        }
+    }
+</style>
+{% endblock %}
