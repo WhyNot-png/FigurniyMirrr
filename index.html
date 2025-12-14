@@ -1,0 +1,27 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+<div class="jumbotron">
+    <h1>ФигурныйМир</h1>
+    <p class="lead">Ваш мир коллекционных фигурок мультгероев!</p>
+    <p><a href="/catalog" class="btn btn-primary btn-lg">Посмотреть каталог &raquo;</a></p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Популярные категории</h2>
+        <p>Откройте для себя самые популярные коллекции фигурок любимых персонажей</p>
+        <p><a class="btn btn-default" href="/categories">Перейти к категориям &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Новые поступления</h2>
+        <p>Самые свежие и эксклюзивные фигурки уже в нашем магазине</p>
+        <p><a class="btn btn-default" href="/catalog">Смотреть новинки &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Акции и скидки</h2>
+        <p>Специальные предложения для наших постоянных покупателей</p>
+        <p><a class="btn btn-default" href="/catalog">Узнать об акциях &raquo;</a></p>
+    </div>
+</div>
+{% endblock %}
